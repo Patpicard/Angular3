@@ -1,25 +1,87 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
- 
+
 
 <main class="main">
- 
- 
- 
-</main>
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <div>
+  <div class="content">
+    <div class="left-side"> 
+      <h1>{{ title() }}</h1>
+      <p>Patricio Peralta </p>
+
+<img src="/vinilo.svg" alt="Vinilo" width="60" height="60">
+
+
+    </div> <div id= "sarasa" class="divider" role="separator" aria-label="Divider"></div>
+    <div class="left-side">
+      <h3> form para agregar</h3>
+<app-disco-form></app-disco-form>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side4list">
+      
+      <!-- ENCABEZADOS (Actúan como celdas de la primera fila) -->
+      <div class="grid-header col-title">Disco</div>
+      <div class="grid-header col-date">Fecha</div>
+      <div class="grid-header col-price">Precio</div>
+      <div class="grid-header col-disc">Desc.</div>
+      <div class="grid-header col-actions">A</div>
+
+      <!-- DATOS (El @for genera las celdas de las siguientes filas) -->
+      @for (item of productos; track item.id) {
+        <div class="grid-cell col-title">{{ item.title }}</div>
+        <div class="grid-cell col-date">{{ item.fecha |  date:'dd/MM/yyyy' }}</div>
+        <div class="grid-cell col-price">{{ item.precio | currency:'ARS' }}</div>
+        <div class="grid-cell col-disc">
+          {{ item.precio | descuento:item.descuento | currency:'ARS' }}</div>
+        <div class="grid-cell col-actions">
+          <button class="copy-btn" (click)="eliminar(item.id)">🗑️</button>
+        </div>
+      }
+    </div>
+
+    
+  </div> 
+ <hr/>
+<div style="clear: both; display: block; width: 70%;">
+  <div class="left-side">
+    <h4>Reciente borrados</h4>
+    
+    <!-- Usamos el mismo contenedor de grid que en la lista de productos -->
+    <div class="right-side4list">
+      
+      <!-- ENCABEZADOS: Exactamente iguales a la lista principal [1] -->
+      <div class="grid-header col-title">Disco</div>
+      <div class="grid-header col-date">Fecha</div>
+      <div class="grid-header col-price">Precio</div>
+      <div class="grid-header col-disc">Desc.</div>
+      <div class="grid-header col-actions">A</div>
+
+      <!-- DATOS: Usamos grid-cell para que las columnas alineen perfecto [2] -->
+      @for (item of borrados; track item.id) {
+        <div class="grid-cell col-title">{{ item.title }}</div>
+        
+        <!-- Pipe DATE: Formato dd/mm/aaaa como pide la tarea [3, 4] -->
+        <div class="grid-cell col-date">{{ item.fecha | date:'dd/MM/yyyy' }}</div>
+        
+        <!-- Pipe CURRENCY: Formato moneda estándar [3, 5] -->
+        <div class="grid-cell col-price">{{ item.precio | currency:'ARS' }}</div>
+        
+        <!-- VALOR RAW: Aquí NO usamos el pipe descuento, mostramos solo el % -->
+        <div class="grid-cell col-disc">{{ item.descuento }}%</div>
+        
+        <div class="grid-cell col-actions">
+          <!-- Acción: Copiar al formulario para restaurar [6] -->
+          <button class="copy-btn" (click)="copiarAlForm(item)" title="Restaurar al formulario">
+            📋
+          </button>
+        </div>
+      } @empty {
+        <div class="grid-cell" style="grid-column: span 5; text-align: center; padding: 1rem;">
+          No hay elementos en la papelera.
+        </div>
+      }
+    </div>
+  </div>
+</div>
 
 
 <router-outlet />

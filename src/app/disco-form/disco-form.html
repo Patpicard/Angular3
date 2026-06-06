@@ -1,0 +1,45 @@
+<form [formGroup]="formulario" (ngSubmit)="enviar()">
+  <!-- Campo Disco con validación dinámica [21] -->
+  <div class="form-group">
+    <label>Nombre del Disco:</label>
+    <input type="text" formControlName="disco" 
+           [ngClass]="{'is-invalid': formulario.get('disco')?.invalid && formulario.get('disco')?.touched}">
+    <small *ngIf="formulario.get('disco')?.invalid && formulario.get('disco')?.touched" class="text-danger">
+      El nombre es obligatorio.
+    </small>
+  </div>
+
+  <!-- Campo Lanzamiento -->
+  <div class="form-group">
+    <label>Lanzamiento (DD/MM/AAAA):</label>
+    <input type="text" formControlName="lanzamiento" placeholder="01/01/2024">
+    <small *ngIf="formulario.get('lanzamiento')?.invalid && formulario.get('lanzamiento')?.touched" class="text-danger">
+      Formato de fecha inválido.
+    </small>
+  </div>
+
+  <!-- Campo Precio -->
+  <div class="form-group">
+    <label>Precio:</label>
+    <input type="number" formControlName="precio">
+    <small *ngIf="formulario.get('precio')?.invalid && formulario.get('precio')?.touched" class="text-danger">
+      Debe ser un número entero mayor a 0.
+    </small>
+  </div>
+
+  <!-- Campo Descuento (sin mensaje, pero obligatorio para el botón) -->
+  <div class="form-group">
+    <label>Descuento (%):</label>
+    <input type="number" formControlName="descuento">
+  </div>
+
+  <!-- Botón deshabilitado si el formulario es inválido [11, 22] -->
+  <div class="button-group">
+    <button type="submit" [disabled]="formulario.invalid" class="btn-enviar">
+      Agregar Disco
+    </button>
+    <button type="button" (click)="formulario.reset()" class="btn-limpiar">
+      Limpiar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,85 @@
+
+
+
+
+<main class="main">
+  <div>
+  <div class="content">
+    <div class="left-side"> 
+      <h1>{{ title() }}</h1>
+      <p>Patricio Peralta </p>
+
+<img src="/vinilo.svg" alt="Vinilo" width="60" height="60">
+
+
+    </div> <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="left-side">
+      <h3> form para agregar</h3>
+<app-disco-form></app-disco-form>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side right-side4list" >
+  <div class="header-row">
+    <span class="col-title">Disco</span>
+    <span class="col-date">Lanzamiento</span>
+    <span class="col-price">Precio</span>
+    <span class="col-disc">Desc.</span>
+    <span class="col-actions">Acciones</span>
+  </div>
+    <div class="pill-group">
+  @for ( item  of productos; track item?.title) { 
+    <div class="pill">
+      <span>{{ item?.title }}</span>
+      <span>{{ item?.fecha | date:'longDate':'':'es-AR'}}</span>
+
+      <span>{{ item?.precio | currency:'ARS':'symbol':'1.2-2':'es-AR' }}</span>
+      <span>{{ item?.descuento }}%</span>
+      <!-- Botón de borrar (por ahora sin acción) -->
+      <button class="delete-btn">🗑️</button>
+    </div>
+  }
+</div>
+
+      <div class="social-links">
+      </div>
+    </div>
+    
+  </div> 
+ <hr/>
+<div style="clear: both; display: block; width: 100%;">
+  <div class="left-side">
+      <h4>Reciente borrados</h4>
+      <p> </p> 
+      <div class="right-side">
+  <!-- Encabezado de la lista -->
+  <div class="header-row">
+    <span class="col-title">Disco</span>
+    <span class="col-date">Lanzamiento</span>
+    <span class="col-price">Precio</span>
+    <span class="col-disc">Desc.</span>
+    <span class="col-actions">Acciones</span>
+  </div>
+  
+  <div class="pill-group">
+    @for (item of borrados; track item?.title) {
+      <div class="pill">
+        <span class="col-title">{{ item?.title }}</span>
+        <span class="col-date">{{ item?.fecha | date:'mediumDate':'':'es-AR'}}</span>
+        <span class="col-price">{{ item?.precio }}</span>
+        <span class="col-disc">{{ item?.descuento }}%</span> 
+        
+        <!-- Botón con icono de copia (dos papeles) -->
+        <button class="copy-btn" (click)="copiarAlForm(item)" title="Copiar al formulario">
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+            <path fill="currentColor" d="M208 0H256V80l80 0v48H256V224H208V128H128V80h80V0zM96 96V512H448V96H96zM0 64V416l64 0V64H0z"/>
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+</div>
+      </div></div>
+      </div>
+
+
+<router-outlet />
